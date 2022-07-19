@@ -40,16 +40,16 @@ export class UserRelationDao {
             return error.message;
         }
     }
-    public async getFollowersByUserId(userId: string): Promise<any> {
+    public async getFollowersIdByUserId(userId: string): Promise<any> {
         console.log('getRelationsByUserId dao input id', userId);
         try {
             const input = {
-                userId,
-                type: 'Followed'
+                followerId: userId,
+                type: RelationType.following
             }
             const followers = await UserRelationModel.find(input);
             console.log('return of getRelationsByUserId dao', followers);
-            return followers;
+            return followers.map(follower => follower.userId);
         } catch (error) {
             console.log('Error in getRelationsByUserId dao', error);
             return error.message;
@@ -59,12 +59,12 @@ export class UserRelationDao {
         console.log('getRequestersByUserId dao input id', userId);
         try {
             const input = {
-                userId,
-                type: 'Requested'
+                followerId: userId,
+                type: RelationType.requested
             }
             const requesters = await UserRelationModel.find(input);
             console.log('return of getRequestersByUserId dao', requesters);
-            return requesters;
+            return requesters.map(requester => requester.userId);
         } catch (error) {
             console.log('Error in getRequestersByUserId dao', error);
             return error.message;
@@ -75,12 +75,12 @@ export class UserRelationDao {
         console.log('getFollowingUsersByUserId dao input id', userId);
         try {
             const input = {
-                followerId: userId,
-                type: 'Followed'
+                userId,
+                type: RelationType.following
             }
             const followingUsers = await UserRelationModel.find(input);
             console.log('return of getFollowingUsersByUserId dao', followingUsers);
-            return followingUsers;
+            return followingUsers.map(followingUser => followingUser.followerId);
         } catch (error) {
             console.log('Error in getFollowingUsersByUserId dao', error);
             return error.message;
@@ -90,7 +90,8 @@ export class UserRelationDao {
         console.log('updateUserRelationTypeById dao input id', id);
         console.log('updateUserRelationTypeById dao input type', type);
         try {
-            const updatedUserRelation = await UserRelationModel.findByIdAndUpdate(id, { type });
+            await UserRelationModel.findByIdAndUpdate(id, { type });
+            const updatedUserRelation = await UserRelationModel.findById(id);
             console.log('Return from findByIdAndUpdate', updatedUserRelation);
             return updatedUserRelation && updatedUserRelation.toObject();
         } catch (error) {

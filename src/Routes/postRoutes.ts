@@ -15,10 +15,10 @@ class PostRoutes {
         application.route('/post/:id').get(this.auth.checkValidUser, this.postController.getPostById);
         //needs to test user-feeds api
         application.route('/user-feeds/:id').get(this.auth.checkValidUser, this.postController.getUserFeedsByUserId);
-        application.route('/posts/:id').get(this.auth.checkValidUser, this.postController.getAllPostsByOwnerId);
-        application.route('/post/:id').put(this.auth.checkValidUser, this.postController.updatePostCaptionById);
+        application.route('/all-posts/:id').get(this.auth.checkValidUser, this.postController.getAllPostsByOwnerId);
+        application.route('/update-post/:id').put(this.auth.checkValidUser, this.postController.updatePostCaptionById);
         application.route('/delete-post/:id').delete(this.auth.checkValidUser, this.postController.deletePostById);
-        application.route('/delete-all-posts/:id').delete(this.auth.checkValidUser, this.postController.deleteAllPostsByUserId);
+        application.route('/delete-posts/all/:id').delete(this.auth.checkValidUser, this.postController.deleteAllPostsByUserId);
     }
 }
 

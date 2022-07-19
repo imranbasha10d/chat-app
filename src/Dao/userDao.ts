@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { UserModel } from "../Models";
 import { User, UserPassword } from '../Utils/Types'
 
@@ -28,6 +29,17 @@ export class UserDao {
             return user && user.toObject();
         } catch (error) {
             console.log('Error in getUserByUsername dao', error);
+            return error.message;
+        }
+    }
+    public async getUsersByUserIds(ids: string[]) {
+        console.log('getUsersByUserIds dao input ids', ids);
+        try {
+            const users = await UserModel.find().where('_id').in(ids).exec();
+            console.log('return from getUsersByUserIds dao', users);
+            return users;
+        } catch (error) {
+            console.log('Error in getUsersByUserIds dao', error);
             return error.message;
         }
     }

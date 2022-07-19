@@ -11,13 +11,13 @@ class UserRelationRoutes {
     }
 
     public initialRoutes(application: Application) {
-        application.route('/sendUserRequest').post(this.auth.checkValidUser, this.userRelationController.sendUserRequest);
-        application.route('/acceptUserRequest/:id').post(this.auth.checkValidUser, this.userRelationController.acceptUserRequest);
+        application.route('/user-request/send').post(this.auth.checkValidUser, this.userRelationController.sendUserRequest);
+        application.route('/user-request/accept/:id').post(this.auth.checkValidUser, this.userRelationController.acceptUserRequest);
         application.route('/followers/:id').get(this.auth.checkValidUser, this.userRelationController.getFollowersByUserId);
         application.route('/following/:id').get(this.auth.checkValidUser, this.userRelationController.getFollowingUsersByUserId);
         application.route('/requests/:id').get(this.auth.checkValidUser, this.userRelationController.getRequestersByUserId);
-        application.route('/deleteUserRelation').delete(this.auth.checkValidUser, this.userRelationController.deleteUserRelationByIds);
-        application.route('/deleteAllUserRelation/:id').delete(this.auth.checkValidUser, this.userRelationController.deleteAllUserRelationByUserId);
+        application.route('/delete-user-relation').delete(this.auth.checkValidUser, this.userRelationController.deleteUserRelationByIds);
+        application.route('/delete-user-relation/all/:id').delete(this.auth.checkValidUser, this.userRelationController.deleteAllUserRelationByUserId);
     }
 }
 

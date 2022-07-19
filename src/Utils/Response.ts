@@ -19,7 +19,13 @@ export const RESPONSE_MEESAGE = {
   USER_NOT_FOUND: "User not found",
   POST_NOT_FOUND: "Post not found",
   PASSWORD_INCORRECT: "Password incorrect",
-  USER_ALREADY_EXISTED: "User already existed"
+  USER_ALREADY_EXISTED: "User already existed",
+  REQUEST_ALREADY_SENT: "Request already sent",
+  REQUEST_NOT_FOUND: "Request not found",
+  USER_CURRENTLY_FOLLOWING_THIS_ACCOUNT: "User currently following this account",
+  FAILED_TO_CREATE_REQUEST: "Failed to create request",
+  FAILED_TO_ACCEPT_REQUEST: "Failed to accept request",
+  USER_RELATION_NOT_FOUNT: "User relation not found",
 }
 
 export class Response {

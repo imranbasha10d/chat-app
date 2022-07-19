@@ -19,25 +19,25 @@ export default class UserRelationService {
             console.log('check user and follower: follower: ', follower);
             if (!user?._id || !follower?._id) {
                 console.log('return from createUserRelation service');
-                return Response.fileNotFound();
+                return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
             }
             let existingRelation = await this.userRelationDao.getUserRelationByIds(data);
             console.log('return value from getUserRelationByUserId: existingRelation: ', existingRelation);
             if(existingRelation && existingRelation._id){
                 if(existingRelation.type == RelationType.requested){
                     console.log('return from createUserRelation service');
-                    return Response.badRequest("Request already sent to account");
+                    return Response.badRequest(RESPONSE_MEESAGE['REQUEST_ALREADY_SENT']);
                 }
                 console.log('return from createUserRelation service');
-                return Response.badRequest("User is currently following this account");
+                return Response.badRequest(RESPONSE_MEESAGE['USER_CURRENTLY_FOLLOWING_THIS_ACCOUNT']);
             }
             const type: RelationType = RelationType.requested;
             const userRelation = await this.userRelationDao.createUserRelation({...data, type });
-            console.log('return from createUserRelation service', Object.assign({}, userRelation));
-            return Response.success(Object.assign({}, userRelation));
+            console.log('return from createUserRelation service', userRelation);
+            return Response.success(userRelation);
         } catch (error) {
             console.log('return from createUserRelation service', error);
-            return Response.badRequest(error.message);
+            return Response.badRequest(RESPONSE_MEESAGE['FAILED_TO_CREATE_REQUEST']);
         }
     }
 
@@ -46,31 +46,42 @@ export default class UserRelationService {
         try {
             let existingRelation = await this.userRelationDao.getUserRelationById(id);
             console.log('return value from getUserRelationById: existingRelation: ', existingRelation);
-            if(!existingRelation && !existingRelation._id){
+            if (!existingRelation?._id) {
                 console.log('return from acceptUserRequest service');
-                return Response.badRequest("User wasn't send request yet");
+                return Response.badRequest(RESPONSE_MEESAGE['REQUEST_NOT_FOUND']);
+            }
+            if (existingRelation && existingRelation.type == RelationType.following) {
+                console.log('return from createUserRelation service');
+                return Response.badRequest(RESPONSE_MEESAGE['USER_CURRENTLY_FOLLOWING_THIS_ACCOUNT']);
             }
             const type: RelationType = RelationType.following;
             const userRelation = await this.userRelationDao.updateUserRelationTypeById(existingRelation._id, type);
-            console.log('return from acceptUserRequest service', Object.assign({}, userRelation));
-            return Response.success(Object.assign({}, userRelation));
+            console.log('return from acceptUserRequest service', userRelation);
+            return Response.success(userRelation);
         } catch (error) {
             console.log('return from acceptUserRequest service', error);
-            return Response.badRequest(error.message);
+            return Response.badRequest(RESPONSE_MEESAGE['FAILED_TO_ACCEPT_REQUEST']);
         }
     }
 
     public async getFollowersByUserId(userId: string): Promise<any> {
         console.log('getFollowersByUserId service input userId', userId);
         try {
-            let followers = await this.userRelationDao.getFollowersByUserId(userId);
+            let user = await this.userDao.getUserByUserId(userId);
+            console.log('check user: user: ', user);
+            if (!user?._id) {
+                console.log('return from getFollowersByUserId service');
+                return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
+            }
+            let followers = await this.userRelationDao.getFollowersIdByUserId(userId);
             console.log('return value from getFollowersByUserId method', followers);
             if(!followers){
                 console.log('return from getFollowersByUserId service', followers);
                 return [];
             }
-            console.log('return from getFollowersByUserId service', Object.assign([], followers));
-            return Response.success(Object.assign([], followers));
+            const users = await this.userDao.getUsersByUserIds(followers);
+            console.log('return from getFollowersByUserId service', users);
+            return Response.success(users);
         } catch (error) {
             console.log('return from getFollowersByUserId service', error);
             return Response.badRequest(error.message);
@@ -80,14 +91,21 @@ export default class UserRelationService {
     public async getFollowingUsersByUserId(userId: string): Promise<any> {
         console.log('getFollowingUsersByUserId service input userId', userId);
         try {
+            let user = await this.userDao.getUserByUserId(userId);
+            console.log('check user: user: ', user);
+            if (!user?._id) {
+                console.log('return from getFollowingUsersByUserId service');
+                return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
+            }
             let followingUsers = await this.userRelationDao.getFollowingUsersByUserId(userId);
             console.log('return value from getFollowingUsersByUserId method', followingUsers);
             if(!followingUsers){
                 console.log('return from getFollowingUsersByUserId service', followingUsers);
                 return [];
             }
-            console.log('return from getFollowingUsersByUserId service', Object.assign([], followingUsers));
-            return Response.success(Object.assign([], followingUsers));
+            const users = await this.userDao.getUsersByUserIds(followingUsers);
+            console.log('return from getFollowingUsersByUserId service', users);
+            return Response.success(users);
         } catch (error) {
             console.log('return from getFollowingUsersByUserId service', error);
             return Response.badRequest(error.message);
@@ -97,14 +115,21 @@ export default class UserRelationService {
     public async getRequestersByUserId(userId: string): Promise<any> {
         console.log('getRequestersByUserId service input userId', userId);
         try {
+            let user = await this.userDao.getUserByUserId(userId);
+            console.log('check user: user: ', user);
+            if (!user?._id) {
+                console.log('return from getRequestersByUserId service');
+                return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
+            }
             let requesters = await this.userRelationDao.getRequestersByUserId(userId);
             console.log('return value from getRequestersByUserId method', requesters);
             if(!requesters){
                 console.log('return from getRequestersByUserId service', requesters);
                 return [];
             }
-            console.log('return from getRequestersByUserId service', Object.assign([], requesters));
-            return Response.success(Object.assign([], requesters));
+            const users = await this.userDao.getUsersByUserIds(requesters);
+            console.log('return from getRequestersByUserId service', users);
+            return Response.success(users);
         } catch (error) {
             console.log('return from getRequestersByUserId service', error);
             return Response.badRequest(error.message);
@@ -116,16 +141,16 @@ export default class UserRelationService {
         try {
             let existingRelation = await this.userRelationDao.getUserRelationByIds(data);
             console.log('return val from getUserRelationByIds method', existingRelation);
-            if (!existingRelation && !existingRelation._id) {
+            if (!existingRelation?._id) {
                 console.log('return deleteUserRelationById service', existingRelation);
-                return Response.fileNotFound();
+                return Response.notFound(RESPONSE_MEESAGE['USER_RELATION_NOT_FOUNT']);
             }
             const deletedRelation = await this.userRelationDao.deleteUserRelationById(existingRelation._id);
             console.log('return from deleteUserRelationById service', deletedRelation);
             return Response.success(deletedRelation);
         } catch (error) {
             console.log('return from deleteUserRelationById service', error);
-            return Response.badRequest(error.message);
+            return Response.badRequest(RESPONSE_MEESAGE['FAILED_TO_DELETE_USER_RELATION']);
         }
     }
 
