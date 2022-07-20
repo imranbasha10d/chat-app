@@ -34,7 +34,7 @@ export class PostDao {
         try {
             const posts = await PostModel.find().where('ownerId').in(userIds).exec();
             console.log('return of getAllPostsByUserIds dao', posts);
-            return posts && posts;
+            return posts;
         } catch (error) {
             console.log('Error in getAllPostsByUserIds dao', error);
             return error.message;

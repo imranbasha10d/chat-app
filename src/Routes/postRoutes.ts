@@ -13,7 +13,6 @@ class PostRoutes {
     public initialRoutes(application: Application) {
         application.route('/create-post').post(this.auth.checkValidUser, this.postController.createPost);
         application.route('/post/:id').get(this.auth.checkValidUser, this.postController.getPostById);
-        //needs to test user-feeds api
         application.route('/user-feeds/:id').get(this.auth.checkValidUser, this.postController.getUserFeedsByUserId);
         application.route('/all-posts/:id').get(this.auth.checkValidUser, this.postController.getAllPostsByOwnerId);
         application.route('/update-post/:id').put(this.auth.checkValidUser, this.postController.updatePostCaptionById);

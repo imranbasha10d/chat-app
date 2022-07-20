@@ -68,8 +68,8 @@ export default class PostService {
         console.log('getAllPostsByUserIds service input userIds', userIds);
         try {
             const posts = await this.postDao.getAllPostsByUserIds(userIds);
-            console.log('return from getAllPostsByUserIds service', Object.assign([], posts));
-            return Response.success(Object.assign([], posts));
+            console.log('return from getAllPostsByUserIds service', posts);
+            return Response.success(posts);
         } catch (error) {
             console.log('return from getAllPostsByUserIds service', error);
             return Response.badRequest(error.message);
@@ -79,13 +79,17 @@ export default class PostService {
     public async getUserFeedsByUserId(userId: string): Promise<any> {
         console.log('getUserFeedsByUserId service input userId', userId);
         try {
-            const followingUsers = await this.userRelationDao.getFollowingUsersByUserId(userId);
-            console.log('return value from getFollowingUsersByUserId method', Object.assign([], followingUsers));
-            const ids = followingUsers.map(user => user._id);
-            console.log('checkking value of ids', ids);
-            const feeds = this.getAllPostsByUserIds(ids);
-            console.log('return from getUserFeedsByUserId', Object.assign([], feeds));
-            return Response.success(Object.assign([], feeds));
+            let user = await this.userDao.getUserByUserId(userId);
+            console.log('return value from getUserByUserId: user: ', user);
+            if (!user?._id) {
+                console.log('return from getUserFeedsByUserId service', user);
+                return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
+            }
+            const followingUserIds = await this.userRelationDao.getFollowingUsersByUserId(userId);
+            console.log('return value from getFollowingUsersByUserId method', followingUserIds);
+            const feeds = await this.postDao.getAllPostsByUserIds(followingUserIds);
+            console.log('return from getUserFeedsByUserId', feeds);
+            return Response.success(feeds);
         } catch (error) {
             console.log('return from getUserFeedsByUserId service', error);
             return Response.badRequest(error.message);
