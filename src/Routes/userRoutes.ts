@@ -1,6 +1,7 @@
 import { Application } from "express";
 import { UserController } from '../Controllers'
 import { Auth } from "../Auth/Authentication";
+import { Log } from "../Logger";
 
 class UserRoutes {
     private userController: UserController
@@ -12,7 +13,7 @@ class UserRoutes {
 
     public initialRoutes(application: Application) {
         application.route('/health-user').get((req, res) => {
-            console.log('req : ', req);
+            Log.error('req : ', {health: "Success"});
             res.send('user health check success')
         });
         application.route('/create-user').post(this.userController.createUser);
