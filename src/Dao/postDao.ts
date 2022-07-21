@@ -1,9 +1,10 @@
 import { PostModel } from "../Models";
-import { Post } from '../Utils/Types'
+import { Post } from '../Utils/Types';
+import { Log } from "../Logger";
 
 export class PostDao {
     public async createPost(data: Post): Promise<any> {
-        console.log('createPost dao input data', data);
+        Log.info('createPost dao input data', data);
         try {
             const newPost = new PostModel({
                 caption: data.caption,
@@ -11,78 +12,78 @@ export class PostDao {
                 ownerId: data.ownerId,
             });
             const postData = await newPost.save();
-            console.log('createPost dao successfully', postData);
+            Log.info('createPost dao successfully', postData);
             return postData && postData.toObject();
         } catch (error) {
-            console.log('Error in createPost dao', error);
+            Log.error('Error in createPost dao', error);
             return error.message;
         }
     }
     public async getAllPostsByOwnerId(ownerId: string): Promise<any> {
-        console.log('getPostByOwnerId dao input ownerId', ownerId);
+        Log.info('getPostByOwnerId dao input ownerId', ownerId);
         try {
             const posts = await PostModel.find({ ownerId });
-            console.log('return of find all dao', posts);
+            Log.info('return of find all dao', posts);
             return posts;
         } catch (error) {
-            console.log('Error in getPostByOwnerId dao', error);
+            Log.error('Error in getPostByOwnerId dao', error);
             return error.message;
         }
     }
     public async getAllPostsByUserIds(userIds: string[]): Promise<any> {
-        console.log('getAllPostsByUserIds dao input ownerId', userIds);
+        Log.info('getAllPostsByUserIds dao input ownerId', userIds);
         try {
             const posts = await PostModel.find().where('ownerId').in(userIds).exec();
-            console.log('return of getAllPostsByUserIds dao', posts);
+            Log.info('return of getAllPostsByUserIds dao', posts);
             return posts;
         } catch (error) {
-            console.log('Error in getAllPostsByUserIds dao', error);
+            Log.error('Error in getAllPostsByUserIds dao', error);
             return error.message;
         }
     }
     public async getPostById(id: string): Promise<any> {
-        console.log('getPostById dao input id', id);
+        Log.info('getPostById dao input id', id);
         try {
             const post = await PostModel.findById(id);
-            console.log('return from findById dao', post);
+            Log.info('return from findById dao', post);
             return post && post.toObject();
         } catch (error) {
-            console.log('Error in getPostById dao', error);
+            Log.error('Error in getPostById dao', error);
             return error.message;
         }
     }
     public async updatePostCaptionById(id: string, caption: string): Promise<any> {
-        console.log('updatePostCaptionById dao input id', id);
-        console.log('updatePostCaptionById dao input caption', caption);
+        Log.info('updatePostCaptionById dao input id', id);
+        Log.info('updatePostCaptionById dao input caption', caption);
         try {
             await PostModel.findByIdAndUpdate(id, { caption });
             const updatedPost = await PostModel.findById(id);
-            console.log('Return from findByIdAndUpdate', updatedPost);
+            Log.info('Return from findByIdAndUpdate', updatedPost);
             return updatedPost && updatedPost.toObject();
         } catch (error) {
-            console.log('Error in updatePostCaptionById dao', error);
+            Log.error('Error in updatePostCaptionById dao', error);
             return error.message;
         }
     }
     public async deletePostById(id: string): Promise<any> {
-        console.log('deletePostById dao input id', id);
+        Log.info('deletePostById dao input id', id);
         try {
             const deletedPost = await PostModel.findByIdAndDelete(id);
-            console.log('Return from deleteOne', deletedPost);
+            Log.info('Return from deleteOne', deletedPost);
             return deletedPost;
         } catch (error) {
-            console.log('Error in deletePostById dao', error);
+            Log.error('Error in deletePostById dao', error);
             return error.message;
         }
     }
     public async deleteAllPostsByUserId(userId: string): Promise<any> {
-        console.log('deleteAllPostsByUserId dao input userId', userId);
+        Log.info('deleteAllPostsByUserId dao input userId', userId);
         try {
             const deletedPosts = await PostModel.deleteMany({ ownerId: userId });
-            console.log('Return from deleteAllPostsByUserId', deletedPosts);
+            Log.info('Return from deleteAllPostsByUserId', deletedPosts);
             return deletedPosts;
         } catch (error) {
-            console.log('Error in deleteAllPostsByUserId dao', error);
+            Log.error('Error in deleteAllPostsByUserId dao', error);
             return error.message;
         }
     }

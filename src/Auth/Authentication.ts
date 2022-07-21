@@ -1,6 +1,7 @@
 import { NextFunction as Next, Request as Req, Response as Res } from "express";
 import jwt from 'jsonwebtoken'
 import { Response } from "../Utils/Response";
+import { Log } from "../Logger";
 
 const getIdFromRequest = {
     getIdFromParamAsId: (res: Req)=>{
@@ -24,7 +25,7 @@ export class Auth {
             return null;
         } 
         const token = authHeader.split(' ')[1];
-        console.log("split auth token from header", token);
+        Log.info("split auth token from header", token);
         if (!token){
             return null;
         }
@@ -39,12 +40,12 @@ export class Auth {
     }
     public checkValidUser(req: Req, res: Res, next: Next) {
         const authHeader = req.header('Authorization');
-        console.log('authHeader: ', authHeader);
+        Log.info('authHeader: ', authHeader);
         if (!authHeader){
             return res.status(400).json(Response.badRequest('Auth Header Not Found'));
         } 
         const token = authHeader.split(' ')[1];
-        console.log("split auth token from header", token);
+        Log.info("split auth token from header", token);
         if(!token){
             return res.status(400).json(Response.badRequest('Auth Token Not Found'));
         }

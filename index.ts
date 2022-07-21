@@ -3,8 +3,8 @@ import { json, urlencoded } from "body-parser";
 import Routes from "./src/Routes";
 import cors from "cors";
 import mongoose from 'mongoose';
+import { Log } from "./src/Logger";
 require("dotenv").config();
-
 
 class App {
   public application: Application;
@@ -25,17 +25,17 @@ class App {
 
   private startListen() {
     this.application.listen(process.env.PORT, () => {
-      return console.log(`Express is listening at http://localhost:${process.env.PORT}`);
+      return Log.info(`Express is listening at http://localhost:${process.env.PORT}`);
     })
   }
 
   private async mongoSetup() {
     try {
-      console.log('Enter into db connect');
+      Log.info('Enter into db connect');
       await mongoose.connect(process.env.DATABASE_URL);
-      console.log(`database connected`);
+      Log.info(`database connected`);
     } catch (error) {
-      console.log(`error in database connected`, error);
+      Log.error(`error in database connected`, error);
     }
   }
 }
