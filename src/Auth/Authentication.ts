@@ -2,6 +2,7 @@ import { NextFunction as Next, Request as Req, Response as Res } from "express";
 import jwt from 'jsonwebtoken'
 import { Response } from "../Utils/Response";
 import { Log } from "../Logger";
+import { UserRoles } from "../Utils/Types";
 
 const getIdFromRequest = {
     getIdFromParamAsId: (res: Req)=>{
@@ -73,5 +74,14 @@ export class Auth {
         } catch (e) {
             res.status(400).json(Response.badRequest('Invalid Auth Token'));
         }
+    }
+    public generateToken(userId: string, role: UserRoles) {
+        const token = jwt.sign({
+            expiresIn: "3h",
+            userId,
+            role,
+        }, process.env.ACCESS_TOKEN_SECRET_KEY);
+
+        return token;
     }
 }
