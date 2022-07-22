@@ -65,8 +65,10 @@ export default class UserRelationService {
         }
     }
 
-    public async getFollowersByUserId(userId: string): Promise<any> {
+    public async getFollowersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
         Log.info('getFollowersByUserId service input userId', userId);
+        Log.info('getFollowersByUserId service input limit', limit);
+        Log.info('getFollowersByUserId service input offset', offset);
         try {
             let user = await this.userDao.getUserByUserId(userId);
             Log.info('check user: user: ', user);
@@ -74,7 +76,7 @@ export default class UserRelationService {
                 Log.info('return from getFollowersByUserId service');
                 return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
             }
-            let followers = await this.userRelationDao.getFollowersIdByUserId(userId);
+            let followers = await this.userRelationDao.getFollowersIdByUserId(userId, limit, offset);
             Log.info('return value from getFollowersByUserId method', followers);
             if(!followers){
                 Log.info('return from getFollowersByUserId service', followers);
@@ -89,8 +91,10 @@ export default class UserRelationService {
         }
     }
 
-    public async getFollowingUsersByUserId(userId: string): Promise<any> {
+    public async getFollowingUsersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
         Log.info('getFollowingUsersByUserId service input userId', userId);
+        Log.info('getFollowingUsersByUserId service input limit', limit);
+        Log.info('getFollowingUsersByUserId service input offset', offset);
         try {
             let user = await this.userDao.getUserByUserId(userId);
             Log.info('check user: user: ', user);
@@ -98,7 +102,7 @@ export default class UserRelationService {
                 Log.info('return from getFollowingUsersByUserId service');
                 return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
             }
-            let followingUsers = await this.userRelationDao.getFollowingUsersByUserId(userId);
+            let followingUsers = await this.userRelationDao.getFollowingUsersByUserId(userId, limit, offset);
             Log.info('return value from getFollowingUsersByUserId method', followingUsers);
             if(!followingUsers){
                 Log.info('return from getFollowingUsersByUserId service', followingUsers);
@@ -113,8 +117,10 @@ export default class UserRelationService {
         }
     }
 
-    public async getRequestersByUserId(userId: string): Promise<any> {
+    public async getRequestersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
         Log.info('getRequestersByUserId service input userId', userId);
+        Log.info('getRequestersByUserId service input limit', limit);
+        Log.info('getRequestersByUserId service input offset', offset);
         try {
             let user = await this.userDao.getUserByUserId(userId);
             Log.info('check user: user: ', user);
@@ -122,7 +128,7 @@ export default class UserRelationService {
                 Log.info('return from getRequestersByUserId service');
                 return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
             }
-            let requesters = await this.userRelationDao.getRequestersByUserId(userId);
+            let requesters = await this.userRelationDao.getRequestersByUserId(userId, limit, offset);
             Log.info('return value from getRequestersByUserId method', requesters);
             if(!requesters){
                 Log.info('return from getRequestersByUserId service', requesters);

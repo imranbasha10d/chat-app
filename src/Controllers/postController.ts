@@ -17,12 +17,14 @@ export default class PostController {
     }
     public async getAllPostsByOwnerId(req: Request, res: Response): Promise<void> {
         const ownerId = req.params.id;
-        let result = await postService.getAllPostsByOwnerId(ownerId);
+        const { limit, offset } = req.body;
+        let result = await postService.getAllPostsByOwnerId(ownerId, limit, offset);
         res.status(result.statusCode).json(result);
     }
     public async getUserFeedsByUserId(req: Request, res: Response): Promise<void> {
         const userId = req.params.id;
-        let result = await postService.getUserFeedsByUserId(userId);
+        const { limit, offset } = req.body;
+        let result = await postService.getUserFeedsByUserId(userId, limit, offset);
         res.status(result.statusCode).json(result);
     }
     public async updatePostCaptionById(req: Request, res: Response): Promise<void> {

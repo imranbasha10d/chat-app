@@ -19,10 +19,17 @@ export class PostDao {
             return error.message;
         }
     }
-    public async getAllPostsByOwnerId(ownerId: string): Promise<any> {
+    public async getAllPostsByOwnerId(ownerId: string, limit?: number, offset?: number): Promise<any> {
         Log.info('getPostByOwnerId dao input ownerId', ownerId);
+        Log.info('getPostByOwnerId dao input limit', limit);
+        Log.info('getPostByOwnerId dao input offset', offset);
         try {
-            const posts = await PostModel.find({ ownerId });
+            if(limit === undefined){
+                limit = 10;
+            } else if(offset === undefined){
+                offset = 0;
+            }
+            const posts = await PostModel.find({ ownerId }).skip(offset).limit(limit);
             Log.info('return of find all dao', posts);
             return posts;
         } catch (error) {
@@ -30,10 +37,17 @@ export class PostDao {
             return error.message;
         }
     }
-    public async getAllPostsByUserIds(userIds: string[]): Promise<any> {
+    public async getAllPostsByUserIds(userIds: string[], limit?: number, offset?: number): Promise<any> {
         Log.info('getAllPostsByUserIds dao input ownerId', userIds);
+        Log.info('getAllPostsByUserIds dao input limit', limit);
+        Log.info('getAllPostsByUserIds dao input offset', offset);
         try {
-            const posts = await PostModel.find().where('ownerId').in(userIds).exec();
+            if(limit === undefined){
+                limit = 10;
+            } else if(offset === undefined){
+                offset = 0;
+            }
+            const posts = await PostModel.find().where('ownerId').in(userIds).skip(offset).limit(limit).exec();
             Log.info('return of getAllPostsByUserIds dao', posts);
             return posts;
         } catch (error) {

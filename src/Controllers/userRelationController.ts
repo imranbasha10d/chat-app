@@ -17,17 +17,20 @@ export default class UserRelationController {
     }
     public async getFollowersByUserId(req: Request, res: Response): Promise<void> {
         const userId = req.params.id;
-        let result = await userRelationService.getFollowersByUserId(userId);
+        const { limit, offset } = req.body;
+        let result = await userRelationService.getFollowersByUserId(userId, limit, offset);
         res.status(result.statusCode).json(result);
     }
     public async getFollowingUsersByUserId(req: Request, res: Response): Promise<void> {
         const userId = req.params.id;
-        let result = await userRelationService.getFollowingUsersByUserId(userId);
+        const { limit, offset } = req.body;
+        let result = await userRelationService.getFollowingUsersByUserId(userId, limit, offset);
         res.status(result.statusCode).json(result);
     }
     public async getRequestersByUserId(req: Request, res: Response): Promise<void> {
         const userId = req.params.id;
-        let result = await userRelationService.getRequestersByUserId(userId);
+        const { limit, offset } = req.body;
+        let result = await userRelationService.getRequestersByUserId(userId, limit, offset);
         res.status(result.statusCode).json(result);
     }
     public async deleteUserRelationByIds(req: Request, res: Response): Promise<void> {

@@ -47,8 +47,10 @@ export default class PostService {
         }
     }
 
-    public async getAllPostsByOwnerId(ownerId: string): Promise<any> {
+    public async getAllPostsByOwnerId(ownerId: string, limit?: number, offset?: number): Promise<any> {
         Log.info('getAllPostsByOwnerId service input ownerId', ownerId);
+        Log.info('getAllPostsByOwnerId service input limit', limit);
+        Log.info('getAllPostsByOwnerId service input offset', offset);
         try {
             let user = await this.userDao.getUserByUserId(ownerId);
             Log.info('return value from getUserByUserId: user: ', user);
@@ -56,7 +58,7 @@ export default class PostService {
                 Log.info('return from getAllPostsByOwnerId service', user);
                 return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
             }
-            const posts = await this.postDao.getAllPostsByOwnerId(ownerId);
+            const posts = await this.postDao.getAllPostsByOwnerId(ownerId, limit, offset);
             Log.info('return from getAllPostsByOwnerId service', posts);
             return Response.success(posts);
         } catch (error) {
@@ -77,8 +79,10 @@ export default class PostService {
         }
     }
 
-    public async getUserFeedsByUserId(userId: string): Promise<any> {
+    public async getUserFeedsByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
         Log.info('getUserFeedsByUserId service input userId', userId);
+        Log.info('getUserFeedsByUserId service input limit', limit);
+        Log.info('getUserFeedsByUserId service input offset', offset);
         try {
             let user = await this.userDao.getUserByUserId(userId);
             Log.info('return value from getUserByUserId: user: ', user);
@@ -88,7 +92,7 @@ export default class PostService {
             }
             const followingUserIds = await this.userRelationDao.getFollowingUsersByUserId(userId);
             Log.info('return value from getFollowingUsersByUserId method', followingUserIds);
-            const feeds = await this.postDao.getAllPostsByUserIds(followingUserIds);
+            const feeds = await this.postDao.getAllPostsByUserIds(followingUserIds, limit, offset);
             Log.info('return from getUserFeedsByUserId', feeds);
             return Response.success(feeds);
         } catch (error) {
