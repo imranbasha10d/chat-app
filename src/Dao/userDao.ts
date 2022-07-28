@@ -12,8 +12,13 @@ export class UserDao {
                 password: data.password,
                 role: data.role
             });
-            await newUser.save();
-            const user = await UserModel.findOne({ username: data.username });
+            const createdUser = await newUser.save().then(async (data) => {
+                Log.info('Checking value of save method: data: ', data);
+                await UserModel.findByIdAndUpdate(data._id, { personalInfo: data._id });
+                return data;
+            });
+            Log.info('Return value of save method: data: ', createdUser);
+            const user = await UserModel.findById(createdUser._id);
             Log.info('createUser dao successfully', user);
             return user && user.toObject();
         } catch (error) {
@@ -29,6 +34,17 @@ export class UserDao {
             return user && user.toObject();
         } catch (error) {
             Log.error('Error in getUserByUsername dao', error);
+            return error.message;
+        }
+    }
+    public async getUserDataByUserId(id: string) {
+        Log.info('getUserDataByUserId dao input id', id);
+        try {
+            const user = await UserModel.findOne({ '_id': id }).populate({ path: 'personalInfo' }).exec();
+            Log.info('return of findOne dao', user);
+            return user && user.toObject();
+        } catch (error) {
+            Log.error('Error in getUserDataByUserId dao', error);
             return error.message;
         }
     }

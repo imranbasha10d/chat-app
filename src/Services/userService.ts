@@ -42,7 +42,7 @@ export default class UserService {
             Log.info('return from createAdminUser service', { ...newAdmin, token });
             return Response.success({ ...newAdmin, token });
         } catch (error) {
-            Log.error('return from createUser service', error);
+            Log.error('return from createAdminUser service', error);
             return Response.badRequest(error.message);
         }
     }
@@ -96,6 +96,23 @@ export default class UserService {
             return Response.success({ ...user, token });
         } catch (error) {
             Log.error('return from signin service', error);
+            return Response.badRequest(error.message);
+        }
+    }
+
+    public async getUserDataByUserId(id: string): Promise<any> {
+        Log.info('getUserDataByUserId service input: id: ', id);
+        try {
+            let user = await this.userDao.getUserDataByUserId(id);
+            Log.info('return value from getUserDataByUserId method: user: ', user);
+            if (!user) {
+                Log.info('return from getUserDataByUserId service', user);
+                return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
+            }
+            Log.info('return from getUserDataByUserId service', user);
+            return Response.success(user);
+        } catch (error) {
+            Log.error('return from getUserDataByUserId service', error);
             return Response.badRequest(error.message);
         }
     }

@@ -19,6 +19,11 @@ const UserSchema: Schema = new mongoose.Schema({
         type: String,
         enum: UserRoles,
         required: true
+    },
+    personalInfo: {
+        type: Schema.Types.ObjectId,
+        required: false,
+        ref: 'personalInfo'
     }
 }, { timestamps: true })
 
