@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { Gender, Status } from '../Utils/Types';
+import { Gender, Status } from '../Utils/types';
 
 const PersonalInfoSchema: Schema = new mongoose.Schema({
     _id: {

@@ -1,5 +1,5 @@
 import { PostModel } from "../Models";
-import { Post } from '../Utils/Types';
+import { Post } from '../Utils/types';
 import { Log } from "../Logger";
 
 export class PostDao {
@@ -66,11 +66,12 @@ export class PostDao {
             return error.message;
         }
     }
-    public async updatePostCaptionById(id: string, caption: string): Promise<any> {
+    public async updatePostCaptionById(id: string, caption: string, ownerId: string): Promise<any> {
         Log.info('updatePostCaptionById dao input id', id);
         Log.info('updatePostCaptionById dao input caption', caption);
+        Log.info('updatePostCaptionById dao input ownerId', ownerId);
         try {
-            await PostModel.findByIdAndUpdate(id, { caption });
+            await PostModel.findByIdAndUpdate(id, { caption, ownerId });
             const updatedPost = await PostModel.findById(id);
             Log.info('Return from findByIdAndUpdate', updatedPost);
             return updatedPost && updatedPost.toObject();

@@ -1,5 +1,5 @@
 import { UserModel } from "../Models";
-import { User, UserPassword } from '../Utils/Types';
+import { User, UserPassword } from '../Utils/types';
 import { Log } from "../Logger";
 
 export class UserDao {

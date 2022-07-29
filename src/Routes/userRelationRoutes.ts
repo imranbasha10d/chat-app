@@ -1,6 +1,7 @@
 import { Application } from "express";
 import { UserRelationController } from '../Controllers';
 import { Auth } from "../Auth/Authentication";
+import { userRelationRoutesPath } from "../Utils/routes";
 
 class UserRelationRoutes {
     private userRelationController: UserRelationController;
@@ -9,15 +10,21 @@ class UserRelationRoutes {
         this.userRelationController = new UserRelationController();
         this.auth = new Auth();
     }
-
     public initialRoutes(application: Application) {
-        application.route('/user-request/send').post(this.auth.checkValidUser, this.userRelationController.sendUserRequest);
-        application.route('/user-request/accept/:id').post(this.auth.checkValidUser, this.userRelationController.acceptUserRequest);
-        application.route('/followers/:id').get(this.auth.checkValidUser, this.userRelationController.getFollowersByUserId); //pagination: {limit, offset}
-        application.route('/following/:id').get(this.auth.checkValidUser, this.userRelationController.getFollowingUsersByUserId); //pagination: {limit, offset}
-        application.route('/requests/:id').get(this.auth.checkValidUser, this.userRelationController.getRequestersByUserId); //pagination: {limit, offset}
-        application.route('/delete-user-relation').delete(this.auth.checkValidUser, this.userRelationController.deleteUserRelationByIds);
-        application.route('/delete-user-relation/all/:id').delete(this.auth.checkValidUser, this.userRelationController.deleteAllUserRelationByUserId);
+        application.route(userRelationRoutesPath.userRequestSend)
+            .post(this.auth.checkUserValidation, this.userRelationController.sendUserRequest);
+        application.route(userRelationRoutesPath.userRequestAcceptById)
+            .post(this.auth.checkUserValidation, this.userRelationController.acceptUserRequest);
+        application.route(userRelationRoutesPath.followersById)
+            .get(this.auth.checkUserValidation, this.userRelationController.getFollowersByUserId); //pagination: {limit, offset}
+        application.route(userRelationRoutesPath.followingById)
+            .get(this.auth.checkUserValidation, this.userRelationController.getFollowingUsersByUserId); //pagination: {limit, offset}
+        application.route(userRelationRoutesPath.requestById)
+            .get(this.auth.checkUserValidation, this.userRelationController.getRequestersByUserId); //pagination: {limit, offset}
+        application.route(userRelationRoutesPath.deleteUserRelation)
+            .delete(this.auth.checkUserValidation, this.userRelationController.deleteUserRelationByIds);
+        application.route(userRelationRoutesPath.deleteUserRelationAllById)
+            .delete(this.auth.checkUserValidation, this.userRelationController.deleteAllUserRelationByUserId);
     }
 }
 

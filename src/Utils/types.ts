@@ -27,7 +27,7 @@ export enum Status {
 };
 
 export interface PersonalInfo {
-  _id: string,
+  id: string,
   fullName: string,
   dob: string,
   gender: Gender,

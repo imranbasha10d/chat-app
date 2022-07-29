@@ -1,10 +1,9 @@
 import { UserDao, UserRelationDao, PersonalInfoDao, PostDao } from "../Dao";
-import { User, UserRoles } from "../Utils/Types";
-import { Response, RESPONSE_MEESAGE } from "../Utils/Response";
+import { User, UserRoles } from "../Utils/types";
+import { Response, RESPONSE_MEESAGE } from "../Utils/response";
 import { checkPassword, hashPassword } from '../Utils/generateHasPassword';
 import { Log } from "../Logger";
 import { Auth } from "../Auth/Authentication";
-import jwt from 'jsonwebtoken'
 
 const auth: Auth = new Auth();
 
@@ -37,7 +36,7 @@ export default class UserService {
                 role: role,
             });
             Log.info('return of createAdminUser method', newAdmin);
-            const token = auth.generateToken(newAdmin._id, newAdmin.role);
+            const token = auth.generateNewToken(newAdmin._id, newAdmin.role);
             Log.info('createAdminUser token', token);
             Log.info('return from createAdminUser service', { ...newAdmin, token });
             return Response.success({ ...newAdmin, token });
@@ -64,7 +63,7 @@ export default class UserService {
                 role: role,
             });
             Log.info('return of createUser method', newUser);
-            const token = auth.generateToken(newUser._id, newUser.role);
+            const token = auth.generateNewToken(newUser._id, newUser.role);
             Log.info('createUser token', token);
             Log.info('return from createUser service', { ...newUser, token });
             return Response.success({ ...newUser, token });
@@ -90,7 +89,7 @@ export default class UserService {
             }
             //validation of password work is finished. so deleted it from user object
             delete user.password;
-            const token = auth.generateToken(user._id, user.role);
+            const token = auth.generateNewToken(user._id, user.role);
             Log.info("checking token", token);
             Log.info('return from signin service', { ...user, token });
             return Response.success({ ...user, token });

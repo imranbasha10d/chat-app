@@ -1,6 +1,6 @@
 import { PostDao, UserDao, UserRelationDao } from "../Dao";
-import { Post } from "../Utils/Types";
-import { Response, RESPONSE_MEESAGE } from "../Utils/Response";
+import { Post } from "../Utils/types";
+import { Response, RESPONSE_MEESAGE } from "../Utils/response";
 import { Log } from "../Logger";
 
 export default class PostService {
@@ -101,9 +101,10 @@ export default class PostService {
         }
     }
 
-    public async updatePostCaptionById(id: string, caption: string): Promise<any> {
+    public async updatePostCaptionById(id: string, caption: string, ownerId: string): Promise<any> {
         Log.info('updatePostCaptionById service input id', id);
         Log.info('updatePostCaptionById service input caption', caption);
+        Log.info('updatePostCaptionById service input ownerId', ownerId);
         try {
             let existingPost = await this.postDao.getPostById(id);
             Log.info('return value from getPostById: existingPost: ', existingPost);
@@ -111,7 +112,11 @@ export default class PostService {
                 Log.info('return from updatePostCaptionById service', existingPost);
                 return Response.notFound(RESPONSE_MEESAGE['POST_NOT_FOUND']);
             }
-            const updatedPost = await this.postDao.updatePostCaptionById(id, caption);
+            if (existingPost.ownerId != ownerId) {
+                Log.info('return from updatePostCaptionById service', existingPost);
+                return Response.notFound(RESPONSE_MEESAGE['UNAUTHORIZED_ACCESS']);
+            }
+            const updatedPost = await this.postDao.updatePostCaptionById(id, caption, ownerId);
             Log.info('return from updatePostCaptionById service', updatedPost);
             return Response.success(updatedPost);
         } catch (error) {

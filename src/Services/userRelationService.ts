@@ -1,6 +1,6 @@
 import { UserRelationDao, UserDao } from "../Dao";
-import { UserRelationIds, RelationType } from "../Utils/Types";
-import { Response, RESPONSE_MEESAGE } from "../Utils/Response";
+import { UserRelationIds, RelationType } from "../Utils/types";
+import { Response, RESPONSE_MEESAGE } from "../Utils/response";
 import { Log } from "../Logger";
 
 export default class UserRelationService {

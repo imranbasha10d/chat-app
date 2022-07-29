@@ -1,5 +1,5 @@
 import { statusCode } from "./statusCodes";
-import { ResponseType } from "./Types";
+import { ResponseType } from "./types";
 export const RESPONSE_MEESAGE = {
   USER_DELETED_SUCCESSFULLY: "User deleted successfully",
   FAILED_TO_DELETE_USER: "Failed to delete user",
@@ -26,6 +26,10 @@ export const RESPONSE_MEESAGE = {
   FAILED_TO_CREATE_REQUEST: "Failed to create request",
   FAILED_TO_ACCEPT_REQUEST: "Failed to accept request",
   USER_RELATION_NOT_FOUNT: "User relation not found",
+  AUTH_HEADER_NOT_FOUND: "Auth header not found",
+  AUTH_TOKEN_NOT_FOUND: "Auth token not found",
+  INVALID_AUTH_TOKEN: "Invalid auth token",
+  UNAUTHORIZED_ACCESS: "Unauthorized access",
 }
 
 export class Response {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserService } from '../Services';
-import { User } from '../Utils/Types'
+import { User } from '../Utils/types'
 
 const userService = new UserService();
 

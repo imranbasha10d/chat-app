@@ -1,5 +1,5 @@
 import { UserRelationModel } from "../Models";
-import { RelationType, UserRelation, UserRelationIds } from '../Utils/Types';
+import { RelationType, UserRelation, UserRelationIds } from '../Utils/types';
 import { Log } from "../Logger";
 
 export class UserRelationDao {

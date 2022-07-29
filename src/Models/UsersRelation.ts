@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { RelationType } from '../Utils/Types';
+import { RelationType } from '../Utils/types';
 
 const UsersRelationSchema: Schema = new mongoose.Schema({
     userId: {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PersonalInfoService } from '../Services';
-import { PersonalInfo, UpdatePersonalInfo } from '../Utils/Types'
+import { PersonalInfo, UpdatePersonalInfo } from '../Utils/types'
 
 const personalInfoService = new PersonalInfoService();
 

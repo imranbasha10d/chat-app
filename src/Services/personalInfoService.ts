@@ -1,6 +1,6 @@
 import { PersonalInfoDao } from "../Dao";
-import { PersonalInfo, UpdatePersonalInfo } from "../Utils/Types";
-import { Response, RESPONSE_MEESAGE } from "../Utils/Response";
+import { PersonalInfo, UpdatePersonalInfo } from "../Utils/types";
+import { Response, RESPONSE_MEESAGE } from "../Utils/response";
 import { Log } from "../Logger";
 
 export default class PersonalInfoService {
@@ -12,7 +12,7 @@ export default class PersonalInfoService {
     public async createPersonalInfo(data: PersonalInfo): Promise<any> {
         Log.info('createPersonalInfo service input', data);
         try {
-            let personalInfo = await this.personalDao.getPersonalInfoByUserId(data._id);
+            let personalInfo = await this.personalDao.getPersonalInfoByUserId(data.id);
             Log.info('check personalInfo', personalInfo);
             if (personalInfo) {
                 Log.info('return from createPersonalInfo service', personalInfo);

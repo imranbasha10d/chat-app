@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PostService } from '../Services';
-import { Post } from '../Utils/Types'
+import { Post } from '../Utils/types'
 
 const postService = new PostService();
 
@@ -29,8 +29,8 @@ export default class PostController {
     }
     public async updatePostCaptionById(req: Request, res: Response): Promise<void> {
         const id = req.params.id;
-        const { caption } = req.body;
-        let result = await postService.updatePostCaptionById(id, caption);
+        const { caption, ownerId } = req.body;
+        let result = await postService.updatePostCaptionById(id, caption, ownerId);
         res.status(result.statusCode).json(result);
     }
     public async deletePostById(req: Request, res: Response): Promise<void> {

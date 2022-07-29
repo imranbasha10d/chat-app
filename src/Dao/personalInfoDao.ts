@@ -1,5 +1,5 @@
 import { PersonalInfoModel } from "../Models";
-import { PersonalInfo, UpdatePersonalInfo } from '../Utils/Types'
+import { PersonalInfo, UpdatePersonalInfo } from '../Utils/types'
 import { Log } from "../Logger";
 
 export class PersonalInfoDao {
@@ -7,7 +7,7 @@ export class PersonalInfoDao {
         Log.info('createPersonalInfo dao input data', data);
         try {
             const newPersonalInfo = new PersonalInfoModel({
-                _id: data._id,
+                _id: data.id,
                 fullName: data.fullName,
                 dob: data.dob,
                 gender: data.gender,
