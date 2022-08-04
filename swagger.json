@@ -618,7 +618,12 @@
                             ]
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/user-feeds/{id}": {
@@ -672,7 +677,12 @@
                             ]
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/create-post": {
@@ -719,7 +729,12 @@
                             ]
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/update-post-caption/{id}": {
@@ -772,7 +787,12 @@
                             ]
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/delete-post/{id}": {
@@ -804,7 +824,12 @@
                             "$ref": "#/definitions/Success"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/delete-all-posts/{id}": {
@@ -836,7 +861,12 @@
                             "$ref": "#/definitions/Success"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/followers/{id}": {
@@ -1149,12 +1179,7 @@
                             "$ref": "#/definitions/Success"
                         }
                     }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
+                }
             }
         },
         "/delete-user-relation/all/{id}": {

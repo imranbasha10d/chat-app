@@ -11,7 +11,6 @@ export const authRolesOfPath = {
         postRoutesPath.createPost,
         postRoutesPath.deletePostById,
         postRoutesPath.deleteAllPostsById,
-        userRelationRoutesPath.deleteUserRelation,
         userRelationRoutesPath.deleteUserRelationAllById
     ],
     sameUser: [

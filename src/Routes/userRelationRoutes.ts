@@ -22,7 +22,7 @@ class UserRelationRoutes {
         application.route(userRelationRoutesPath.requestById)
             .get(this.auth.checkUserValidation, this.userRelationController.getRequestersByUserId); //pagination: {limit, offset}
         application.route(userRelationRoutesPath.deleteUserRelation)
-            .delete(this.auth.checkUserValidation, this.userRelationController.deleteUserRelationByIds);
+            .delete(this.userRelationController.deleteUserRelationByIds);   //It should bypass the auth through either userId or followerId only. Need to add.
         application.route(userRelationRoutesPath.deleteUserRelationAllById)
             .delete(this.auth.checkUserValidation, this.userRelationController.deleteAllUserRelationByUserId);
     }
