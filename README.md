@@ -14,3 +14,8 @@ See logs:
 
 
  APIS:
+ //Need to add APIS here.
+ 
+ 
+ Swagger UI:
+ {url}/swagger/
