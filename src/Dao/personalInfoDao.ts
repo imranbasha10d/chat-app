@@ -15,7 +15,7 @@ export class PersonalInfoDao {
             });
             const newInfo = await newPersonalInfo.save();
             Log.info('createPersonalInfo dao successfully', newInfo);
-            return newInfo.toObject();
+            return newInfo && newInfo.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in createPersonalInfo dao', error);
             return error.message;
@@ -26,7 +26,7 @@ export class PersonalInfoDao {
         try {
             const info = await PersonalInfoModel.findById(id);
             Log.info('return from findById dao', info);
-            return info && info.toObject();
+            return info && info.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in getPersonalInfo dao', error);
             return error.message;        
@@ -39,7 +39,7 @@ export class PersonalInfoDao {
             await PersonalInfoModel.findByIdAndUpdate(id, data);
             const updatedInfo = await PersonalInfoModel.findById(id);
             Log.info('Return from findByIdAndUpdate', updatedInfo);
-            return updatedInfo && updatedInfo.toObject();
+            return updatedInfo && updatedInfo.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in updatePersonalInfo dao', error);
             return error.message          
@@ -50,7 +50,7 @@ export class PersonalInfoDao {
         try {
             const deletedInfo = await PersonalInfoModel.findByIdAndDelete(id);
             Log.info('Return from deleteOne', deletedInfo);
-            return deletedInfo && deletedInfo.toObject();
+            return deletedInfo && deletedInfo.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in deleteUser dao', error);
             return error.message;

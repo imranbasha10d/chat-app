@@ -20,7 +20,7 @@ export class UserDao {
             Log.info('Return value of save method: data: ', createdUser);
             const user = await UserModel.findById(createdUser._id);
             Log.info('createUser dao successfully', user);
-            return user && user.toObject();
+            return user && user.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in createUser dao', error);
             return error.message;
@@ -31,7 +31,7 @@ export class UserDao {
         try {
             const user = await UserModel.findOne({ username: data }).select("+password");
             Log.info('return of findOne dao', user);
-            return user && user.toObject();
+            return user && user.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in getUserByUsername dao', error);
             return error.message;
@@ -42,7 +42,7 @@ export class UserDao {
         try {
             const user = await UserModel.findOne({ '_id': id }).populate({ path: 'personalInfo' }).exec();
             Log.info('return of findOne dao', user);
-            return user && user.toObject();
+            return user && user.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in getUserDataByUserId dao', error);
             return error.message;
@@ -64,7 +64,7 @@ export class UserDao {
         try {
             const user = await UserModel.findById(id);
             Log.info('return from findById dao', user);
-            return user && user.toObject();
+            return user && user.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in getUserByUserId dao', error);
             return error.message;
@@ -76,7 +76,7 @@ export class UserDao {
         try {
             const updatedUser = await UserModel.findByIdAndUpdate(id, data);
             Log.info('Return from findByIdAndUpdate', updatedUser);
-            return updatedUser && updatedUser.toObject();
+            return updatedUser && updatedUser.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in updateUserPassword dao', error);
             return error.message;
@@ -87,7 +87,7 @@ export class UserDao {
         try {
             const deletedUser = await UserModel.findByIdAndDelete(id);
             Log.info('Return from deleteOne', deletedUser);
-            return deletedUser && deletedUser.toObject();
+            return deletedUser && deletedUser.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in deleteUserById dao', error);
             return error.message;

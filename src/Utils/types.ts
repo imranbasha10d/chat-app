@@ -7,7 +7,7 @@ export interface User {
   username: string,
   email: string,
   password: string,
-  role: UserRoles,
+  role?: UserRoles,
 }
 
 export interface UserPassword {

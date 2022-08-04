@@ -11,6 +11,7 @@ export const RESPONSE_MEESAGE = {
   FAILED_TO_DELETE_POST: "Failed to delete post",
   FAILED_TO_DELETE_POSTS: "Failed to delete posts",
   USER_RELATION_DELETED_SUCCESSFULLY: "User relation deleted successfully",
+  ALL_USER_RELATIONS_DELETED_SUCCESSFULLY: "All user relations deleted successfully",
   PERSONAL_INFO_NOT_FOUND: "Personal info not found",
   PERSONAL_INFO_ALREADY_EXISTED: "Personal info already existed",
   PERSONAL_INFO_DELETED_SUCCESSFULLY: "Personal info deleted successfully",
@@ -41,36 +42,12 @@ export class Response {
       message: 'Success'
     };
   }
-  public static userNotFound(): ResponseType {
-    return {
-      success: false,
-      statusCode: statusCode.fileNotFound,
-      data: null,
-      message: 'User not found',
-    };
-  }
-  public static infoNotFound(): ResponseType {
-    return {
-      success: false,
-      statusCode: statusCode.fileNotFound,
-      data: null,
-      message: 'Personal info not found',
-    };
-  }
   public static notFound(message: string): ResponseType {
     return {
       success: false,
       statusCode: statusCode.fileNotFound,
       data: null,
       message: message,
-    };
-  }
-  public static fileNotFound(): ResponseType {
-    return {
-      success: false,
-      statusCode: statusCode.fileNotFound,
-      data: null,
-      message: 'File not found',
     };
   }
   public static internalServerError(): ResponseType {

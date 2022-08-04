@@ -25,7 +25,7 @@ export default class UserController {
         let result = await userService.getUserDataByUserId(id);
         res.status(result.statusCode).json(result);
     }
-    public async updatePassword(req: Request, res: Response): Promise<void> {
+    public async updateUserPassword(req: Request, res: Response): Promise<void> {
         const id = req.params.id;
         const { newPassword } = req.body;
         let result = await userService.updateUserPassword(id, newPassword);

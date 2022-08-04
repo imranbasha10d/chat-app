@@ -124,7 +124,7 @@ export default class UserService {
             Log.info('return of getUser method', user);
             if (!user?._id) {
                 Log.info('return from updateUserPassword service', user);
-                return Response.userNotFound();
+                return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
             }
             const hashedPassword = await hashPassword(newPassword);
             const updatedUser = await this.userDao.updateUserPassword(id, { password: hashedPassword });

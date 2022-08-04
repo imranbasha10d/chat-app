@@ -154,7 +154,7 @@ export default class UserRelationService {
             }
             const deletedRelation = await this.userRelationDao.deleteUserRelationById(existingRelation._id);
             Log.info('return from deleteUserRelationById service', deletedRelation);
-            return Response.success(deletedRelation);
+            return Response.success(RESPONSE_MEESAGE['USER_RELATION_DELETED_SUCCESSFULLY']);
         } catch (error) {
             Log.error('return from deleteUserRelationById service', error);
             return Response.badRequest(RESPONSE_MEESAGE['FAILED_TO_DELETE_USER_RELATION']);
@@ -172,7 +172,7 @@ export default class UserRelationService {
             }
             const deletedRelations = await this.userRelationDao.deleteAllUserRelationByUserId(existingUser._id);
             Log.info('return from deleteAllUserRelationByUserId service', deletedRelations);
-            return Response.success(RESPONSE_MEESAGE['USER_RELATION_DELETED_SUCCESSFULLY']);
+            return Response.success(RESPONSE_MEESAGE['ALL_USER_RELATIONS_DELETED_SUCCESSFULLY']);
         } catch (error) {
             Log.error('error from deleteAllUserRelationByUserId service', error);
             return Response.badRequest(RESPONSE_MEESAGE['FAILED_TO_DELETE_USER_RELATION']);

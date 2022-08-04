@@ -26,7 +26,7 @@ class UserRoutes {
         application.route(userRoutesPath.userById)
             .get(this.auth.checkUserValidation, this.userController.getUserDataByUserId);
         application.route(userRoutesPath.updatePasswordById)
-            .put(this.auth.checkUserValidation, this.userController.updatePassword);
+            .put(this.auth.checkUserValidation, this.userController.updateUserPassword);
         application.route(userRoutesPath.deleteUserById)
             .delete(this.auth.checkUserValidation, this.userController.deleteUser);
     }

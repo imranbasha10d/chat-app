@@ -13,7 +13,7 @@ export class PostDao {
             });
             const postData = await newPost.save();
             Log.info('createPost dao successfully', postData);
-            return postData && postData.toObject();
+            return postData && postData.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in createPost dao', error);
             return error.message;
@@ -60,7 +60,7 @@ export class PostDao {
         try {
             const post = await PostModel.findById(id);
             Log.info('return from findById dao', post);
-            return post && post.toObject();
+            return post && post.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in getPostById dao', error);
             return error.message;
@@ -74,7 +74,7 @@ export class PostDao {
             await PostModel.findByIdAndUpdate(id, { caption, ownerId });
             const updatedPost = await PostModel.findById(id);
             Log.info('Return from findByIdAndUpdate', updatedPost);
-            return updatedPost && updatedPost.toObject();
+            return updatedPost && updatedPost.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in updatePostCaptionById dao', error);
             return error.message;

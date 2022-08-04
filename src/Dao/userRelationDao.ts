@@ -13,7 +13,7 @@ export class UserRelationDao {
             });
             const data = await newUserRelation.save();
             Log.info('createUserRelation dao successfully', data);
-            return data && data.toObject();
+            return data && data.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in createUserRelation dao', error);
             return error.message;
@@ -24,7 +24,7 @@ export class UserRelationDao {
         try {
             const relationData = await UserRelationModel.findById(id);
             Log.info('return of getUserRelationById dao', relationData);
-            return relationData && relationData.toObject();
+            return relationData && relationData.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in getUserRelationById dao', error);
             return error.message;
@@ -35,7 +35,7 @@ export class UserRelationDao {
         try {
             const relationData = await UserRelationModel.findOne(data);
             Log.info('return of getUserRelationByIds dao', relationData);
-            return relationData && relationData.toObject();
+            return relationData && relationData.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in getUserRelationByIds dao', error);
             return error.message;
@@ -115,7 +115,7 @@ export class UserRelationDao {
             await UserRelationModel.findByIdAndUpdate(id, { type });
             const updatedUserRelation = await UserRelationModel.findById(id);
             Log.info('Return from findByIdAndUpdate', updatedUserRelation);
-            return updatedUserRelation && updatedUserRelation.toObject();
+            return updatedUserRelation && updatedUserRelation.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in updateUserRelationTypeById dao', error);
             return error.message;
@@ -126,7 +126,7 @@ export class UserRelationDao {
         try {
             const deletedUserRelation = await UserRelationModel.findByIdAndDelete(id);
             Log.info('Return from findByIdAndDelete', deletedUserRelation);
-            return deletedUserRelation && deletedUserRelation.toObject();
+            return deletedUserRelation && deletedUserRelation.toObject({ versionKey: false });
         } catch (error) {
             Log.error('Error in deleteUserRelationById dao', error);
             return error.message;

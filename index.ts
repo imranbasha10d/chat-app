@@ -4,16 +4,19 @@ import Routes from "./src/Routes";
 import cors from "cors";
 import mongoose from 'mongoose';
 import { Log } from "./src/Logger";
+import swaggerUI from "swagger-ui-express";
+const swaggerDocument = require("./swagger.json");
 require("dotenv").config();
 
 class App {
-  public application: Application;
+  public application;
   private routes = new Routes()
   constructor() {
     this.application = Express();
     this.appConfig();
     this.startListen();
     this.routes.initialRoutes(this.application);
+
     this.mongoSetup();
   }
 
@@ -21,6 +24,10 @@ class App {
     this.application.use(json());
     this.application.use(urlencoded({ extended: false }));
     this.application.use(cors({ credentials: true, origin: true, }));
+    //swagger UI setup
+    this.application.use(
+      '/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocument)
+    );
   }
 
   private startListen() {
