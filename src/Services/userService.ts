@@ -116,6 +116,18 @@ export default class UserService {
         }
     }
 
+    public async getUsersByUserIds(ids: string[]): Promise<any> {
+        Log.info('getUsersByUserIds service input: ids: ', ids);
+        try {
+            let users = await this.userDao.getUsersByUserIds(ids);
+            Log.info('return from getUsersByUserIds service', users);
+            return Response.success(users);
+        } catch (error) {
+            Log.error('return from getUsersByUserIds service', error);
+            return Response.badRequest(error.message);
+        }
+    }
+
     public async updateUserPassword(id: string, newPassword: string): Promise<any> {
         Log.info('updateUserPassword service input id', id);
         Log.info('updateUserPassword service input newPassword', newPassword);

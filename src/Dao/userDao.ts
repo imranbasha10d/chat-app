@@ -1,8 +1,8 @@
 import { UserModel } from "../Models";
-import { User, UserPassword } from '../Utils/types';
+import { User, UserPassword, IUserDao } from '../Utils/types';
 import { Log } from "../Logger";
 
-export class UserDao {
+export class UserDao implements IUserDao {
     public async createUser(data: User): Promise<any> {
         Log.info('createUser dao input data', data);
         try {
@@ -26,7 +26,7 @@ export class UserDao {
             return error.message;
         }
     }
-    public async getUserByUsername(data: string) {
+    public async getUserByUsername(data: string): Promise<any> {
         Log.info('getUserByUsername dao input data', data);
         try {
             const user = await UserModel.findOne({ username: data }).select("+password");
@@ -37,7 +37,7 @@ export class UserDao {
             return error.message;
         }
     }
-    public async getUserDataByUserId(id: string) {
+    public async getUserDataByUserId(id: string): Promise<any> {
         Log.info('getUserDataByUserId dao input id', id);
         try {
             const user = await UserModel.findOne({ '_id': id }).populate({ path: 'personalInfo' }).exec();
@@ -48,7 +48,7 @@ export class UserDao {
             return error.message;
         }
     }
-    public async getUsersByUserIds(ids: string[]) {
+    public async getUsersByUserIds(ids: string[]): Promise<any> {
         Log.info('getUsersByUserIds dao input ids', ids);
         try {
             const users = await UserModel.find().where('_id').in(ids).exec();
@@ -59,7 +59,7 @@ export class UserDao {
             return error.message;
         }
     }
-    public async getUserByUserId(id: string) {
+    public async getUserByUserId(id: string): Promise<any> {
         Log.info('getUserByUserId dao input id', id);
         try {
             const user = await UserModel.findById(id);

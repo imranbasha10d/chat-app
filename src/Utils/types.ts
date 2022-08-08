@@ -72,3 +72,14 @@ export interface ResponseType {
   data: any,
   message: string
 }
+
+export interface IUserDao {
+  createUser(data: User): Promise<any>,
+  getUserByUsername(data: string): Promise<any>,
+  getUserDataByUserId(id: string): Promise<any>,
+  getUsersByUserIds(ids: string[]): Promise<any>,
+  getUserByUserId(id: string): Promise<any>,
+  updateUserPassword(id: string, data: UserPassword): Promise<any>,
+  deleteUserById(id: string): Promise<any>,
+  getUsersByUserIds(ids: string[]): Promise<any>,
+}

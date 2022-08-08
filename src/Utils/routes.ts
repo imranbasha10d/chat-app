@@ -3,7 +3,7 @@ export const userRoutesPath = {
     createUser: '/create-user',
     createAdminUser: '/create-admin-user',
     signIn: '/sign-in',
-    userById: '/user/:id',
+    userById: '/all-users',
     updatePasswordById: '/update-password/:id',
     deleteUserById: '/delete-user/:id',
 }

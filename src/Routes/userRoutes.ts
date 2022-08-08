@@ -3,6 +3,7 @@ import { UserController } from '../Controllers'
 import { Auth } from "../Auth/Authentication";
 import { Log } from "../Logger";
 import { userRoutesPath } from "../Utils/routes";
+import PgDatabase from "../PgDatabase/pgDatabase";
 
 class UserRoutes {
     private userController: UserController
@@ -12,8 +13,8 @@ class UserRoutes {
         this.auth = new Auth();
     }
     public initialRoutes(application: Application) {
-        application.route(userRoutesPath.healthCheck).get((req, res) => {
-            Log.error('req : ', { health: "Success" });
+        application.route(userRoutesPath.healthCheck).get(async (req, res) => {
+            Log.info('user health check success');
             res.send('user health check success')
         });
         application.route(userRoutesPath.createUser)
@@ -25,6 +26,8 @@ class UserRoutes {
             .post(this.userController.signin);
         application.route(userRoutesPath.userById)
             .get(this.auth.checkUserValidation, this.userController.getUserDataByUserId);
+        application.route(userRoutesPath.userById)
+            .post(this.userController.getUsersByUserIds);   //For testing
         application.route(userRoutesPath.updatePasswordById)
             .put(this.auth.checkUserValidation, this.userController.updateUserPassword);
         application.route(userRoutesPath.deleteUserById)
