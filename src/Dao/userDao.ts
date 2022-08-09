@@ -86,8 +86,9 @@ export class UserDao implements IUserDao {
         Log.info('deleteUserById dao input id', id);
         try {
             const deletedUser = await UserModel.findByIdAndDelete(id);
-            Log.info('Return from deleteOne', deletedUser);
-            return deletedUser && deletedUser.toObject({ versionKey: false });
+            Log.info('Return value of findByIdAndDelete method: deletedUser: ', deletedUser);
+            Log.info('Return from deleteUserById dao', id);
+            return id;
         } catch (error) {
             Log.error('Error in deleteUserById dao', error);
             return error.message;

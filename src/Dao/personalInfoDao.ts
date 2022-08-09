@@ -46,13 +46,14 @@ export class PersonalInfoDao {
         }
     }
     public async deletePersonalInfoByUserId(id: string): Promise<any> {
-        Log.info('deleteUser dao input id', id);
+        Log.info('deletePersonalInfoByUserId dao input id', id);
         try {
             const deletedInfo = await PersonalInfoModel.findByIdAndDelete(id);
-            Log.info('Return from deleteOne', deletedInfo);
-            return deletedInfo && deletedInfo.toObject({ versionKey: false });
+            Log.info('Return value of findByIdAndDelete method: deletedInfo: ', deletedInfo);
+            Log.info('Return from deletePersonalInfoByUserId dao', id);
+            return id;
         } catch (error) {
-            Log.error('Error in deleteUser dao', error);
+            Log.error('Error in deletePersonalInfoByUserId dao', error);
             return error.message;
         }
     }

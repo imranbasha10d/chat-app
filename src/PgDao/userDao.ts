@@ -47,7 +47,7 @@ export class UserDao implements IUserDao {
     public async getUserDataByUserId(id: string): Promise<any> {
         Log.info('getUserDataByUserId dao input id', id);
         try {
-            const user = await PgDatabase.query(`SELECT _id,username,email,role FROM users where _id=$1`, [id])
+            const user = await PgDatabase.query(`SELECT _id, username, email, role FROM users where _id=$1`, [id])
                 .then((result) => {
                     const { rows } = result;
                     Log.info('Success fetch user query', rows);
@@ -71,7 +71,7 @@ export class UserDao implements IUserDao {
             if (!ids.length) return [];
             const queryIds = getQueryIds(ids);
             Log.info('Checking queryIds : ', queryIds);
-            const user = await PgDatabase.query(`SELECT _id,username,email,role FROM users where _id in (${queryIds})`, [])
+            const user = await PgDatabase.query(`SELECT _id, username, email, role FROM users where _id in (${queryIds})`, [])
                 .then((result) => {
                     const { rows } = result;
                     Log.info('Success fetch user query', rows);
@@ -135,7 +135,7 @@ export class UserDao implements IUserDao {
     public async deleteUserById(id: string): Promise<any> {
         Log.info('deleteUserById dao input id', id);
         try {
-            const user = await PgDatabase.query(`DELETE FROM users where _id=$1 RETURNING *`, [id])
+            const deletedId = await PgDatabase.query(`DELETE FROM users where _id=$1 RETURNING *`, [id])
                 .then((result) => {
                     const { rows } = result;
                     Log.info('Success deleted query user', rows);
@@ -145,8 +145,8 @@ export class UserDao implements IUserDao {
                     Log.error('Error in deleted query user', error);
                     return null;
                 });
-            Log.info('return of deleteUserById dao', user);
-            return user;
+            Log.info('return of deleteUserById dao', deletedId);
+            return deletedId;
         } catch (error) {
             Log.error('Error in deleteUserById dao', error);
             return error.message;

@@ -6,7 +6,7 @@ CREATE TABLE users (
 	role VARCHAR(255) NOT NULL
 ); 
 
-CREATE TABLE personalInfo (
+CREATE TABLE personal_info (
 	_id VARCHAR(255) PRIMARY KEY,
 	fullName VARCHAR(255) NOT NULL,
 	dob VARCHAR(255) NOT NULL,
@@ -21,9 +21,12 @@ CREATE TABLE posts (
 	ownerId VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE usersRelation (
+CREATE TABLE users_relation (
 	_id VARCHAR(255) PRIMARY KEY,
 	userId VARCHAR(255) NOT NULL,
 	followerId VARCHAR(255) NOT NULL,
 	type VARCHAR(255) NOT NULL
 );
+
+//Drop query
+DROP TABLE <tableName>;
