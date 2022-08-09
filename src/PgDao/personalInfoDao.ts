@@ -25,7 +25,7 @@ export class PersonalInfoDao {
     public async getPersonalInfoByUserId(userId: string) {
         Log.info('getPersonalInfo dao input userId', userId);
         try {
-            const personalInfo = await PgDatabase.query(`SELECT _id, fullName, gender, dob, status FROM personal_info where _id=$1`, [userId])
+            const personalInfo = await PgDatabase.query(`SELECT * FROM personal_info where _id=$1`, [userId])
                 .then((result) => {
                     const { rows } = result;
                     Log.info('Success fetch personalInfo query', rows);

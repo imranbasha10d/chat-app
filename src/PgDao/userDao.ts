@@ -116,13 +116,13 @@ export class UserDao implements IUserDao {
         try {
             const user = await PgDatabase.query(`UPDATE users SET password=$1 where _id=$2`, [data.password, id])
                 .then(async () => {
-                    Log.info('Success updated query user');
+                    Log.info('Success updated user query');
                     const user = await this.getUserByUserId(id);
                     Log.info('Return value from getUserByUserId: user: ', user);
                     return user;
                 })
                 .catch((error) => {
-                    Log.error('Error in updated query user', error);
+                    Log.error('Error in updated user query', error);
                     return null;
                 });
             Log.info('return of updateUserPassword dao', user);
@@ -138,11 +138,11 @@ export class UserDao implements IUserDao {
             const deletedId = await PgDatabase.query(`DELETE FROM users where _id=$1 RETURNING *`, [id])
                 .then((result) => {
                     const { rows } = result;
-                    Log.info('Success deleted query user', rows);
+                    Log.info('Success deleted user query', rows);
                     return id;
                 })
                 .catch((error) => {
-                    Log.error('Error in deleted query user', error);
+                    Log.error('Error in deleted user query', error);
                     return null;
                 });
             Log.info('return of deleteUserById dao', deletedId);
