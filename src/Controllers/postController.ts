@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PostService } from '../Services';
+import { getLimitAndOffsetFromQuery } from '../Utils/pgMethods';
 import { Post } from '../Utils/types'
 
 const postService = new PostService();
@@ -17,13 +18,13 @@ export default class PostController {
     }
     public async getAllPostsByOwnerId(req: Request, res: Response): Promise<void> {
         const ownerId = req.params.id;
-        const { limit, offset } = req.body;
+        const { limit, offset } = getLimitAndOffsetFromQuery(req.query);
         let result = await postService.getAllPostsByOwnerId(ownerId, limit, offset);
         res.status(result.statusCode).json(result);
     }
     public async getUserFeedsByUserId(req: Request, res: Response): Promise<void> {
         const userId = req.params.id;
-        const { limit, offset } = req.body;
+        const { limit, offset } = getLimitAndOffsetFromQuery(req.query);
         let result = await postService.getUserFeedsByUserId(userId, limit, offset);
         res.status(result.statusCode).json(result);
     }

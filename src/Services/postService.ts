@@ -47,7 +47,7 @@ export default class PostService {
         }
     }
 
-    public async getAllPostsByOwnerId(ownerId: string, limit?: number, offset?: number): Promise<any> {
+    public async getAllPostsByOwnerId(ownerId: string, limit: number, offset: number): Promise<any> {
         Log.info('getAllPostsByOwnerId service input ownerId', ownerId);
         Log.info('getAllPostsByOwnerId service input limit', limit);
         Log.info('getAllPostsByOwnerId service input offset', offset);
@@ -67,19 +67,7 @@ export default class PostService {
         }
     }
 
-    public async getAllPostsByUserIds(userIds: string[]): Promise<any> {
-        Log.info('getAllPostsByUserIds service input userIds', userIds);
-        try {
-            const posts = await this.postDao.getAllPostsByUserIds(userIds);
-            Log.info('return from getAllPostsByUserIds service', posts);
-            return Response.success(posts);
-        } catch (error) {
-            Log.error('return from getAllPostsByUserIds service', error);
-            return Response.badRequest(error.message);
-        }
-    }
-
-    public async getUserFeedsByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getUserFeedsByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getUserFeedsByUserId service input userId', userId);
         Log.info('getUserFeedsByUserId service input limit', limit);
         Log.info('getUserFeedsByUserId service input offset', offset);
@@ -92,7 +80,7 @@ export default class PostService {
             }
             const followingUserIds = await this.userRelationDao.getFollowingUsersByUserId(userId);
             Log.info('return value from getFollowingUsersByUserId method', followingUserIds);
-            const feeds = await this.postDao.getAllPostsByUserIds(followingUserIds, limit, offset);
+            const feeds = await this.postDao.getAllPostsByOwnerIds(followingUserIds, limit, offset);
             Log.info('return from getUserFeedsByUserId', feeds);
             return Response.success(feeds);
         } catch (error) {
