@@ -1,6 +1,6 @@
-import { PostModel } from "../Models";
-import { Post } from '../Utils/types';
-import { Log } from "../Logger";
+import { PostModel } from "../../Models";
+import { Post } from "../../Utils/types";
+import { Log } from "../../Logger";
 
 export class PostDao {
     public async createPost(data: Post): Promise<any> {

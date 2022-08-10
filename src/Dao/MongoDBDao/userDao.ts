@@ -1,6 +1,6 @@
-import { UserModel } from "../Models";
-import { User, UserPassword, IUserDao } from '../Utils/types';
-import { Log } from "../Logger";
+import { UserModel } from "../../Models";
+import { User, UserPassword, IUserDao } from "../../Utils/types";
+import { Log } from "../../Logger";
 
 export class UserDao implements IUserDao {
     public async createUser(data: User): Promise<any> {

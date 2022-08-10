@@ -1,8 +1,8 @@
-import { User, UserPassword, IUserDao } from '../Utils/types';
-import { Log } from "../Logger";
+import PgDatabase from "../../PgDatabase/pgDatabase";
+import { User, UserPassword, IUserDao } from "../../Utils/types";
+import { Log } from "../../Logger";
 import { v4 as uuid } from "uuid";
-import PgDatabase from "../PgDatabase/pgDatabase";
-import { getQueryIds } from "../Utils/pgMethods";
+import { getQueryIds } from "../../Utils/pgMethods";
 
 export class UserDao implements IUserDao {
     public async createUser(data: User): Promise<any> {

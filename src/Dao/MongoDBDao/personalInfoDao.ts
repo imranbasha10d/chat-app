@@ -1,6 +1,6 @@
-import { PersonalInfoModel } from "../Models";
-import { PersonalInfo, UpdatePersonalInfo } from '../Utils/types'
-import { Log } from "../Logger";
+import { PersonalInfoModel } from "../../Models";
+import { PersonalInfo, UpdatePersonalInfo } from "../../Utils/types";
+import { Log } from "../../Logger";
 
 export class PersonalInfoDao {
     public async createPersonalInfo(data: PersonalInfo): Promise<any> {

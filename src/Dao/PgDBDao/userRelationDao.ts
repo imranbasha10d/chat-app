@@ -1,7 +1,7 @@
-import { RelationType, UserRelation, UserRelationIds } from '../Utils/types';
-import { Log } from "../Logger";
+import PgDatabase from "../../PgDatabase/pgDatabase";
+import { RelationType, UserRelation, UserRelationIds } from '../../Utils/types';
+import { Log } from "../../Logger";
 import { v4 as uuid } from "uuid";
-import PgDatabase from "../PgDatabase/pgDatabase";
 
 export class UserRelationDao {
     public async createUserRelation(data: UserRelation): Promise<any> {
