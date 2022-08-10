@@ -6,7 +6,7 @@ export class PersonalInfoDao {
     public async createPersonalInfo(data: PersonalInfo): Promise<any> {
         Log.info('createPersonalInfo dao input data', data);
         try {
-            await PgDatabase.query("INSERT INTO personal_info (_id, fullName, gender, dob, status) VALUES ($1,$2,$3,$4,$5)", [
+            await PgDatabase.query("INSERT INTO personal_info (_id, \"fullName\", gender, dob, status) VALUES ($1,$2,$3,$4,$5)", [
                 data.id,
                 data.fullName,
                 data.gender,
@@ -47,7 +47,7 @@ export class PersonalInfoDao {
         Log.info('updatePersonalInfo dao input id', id);
         Log.info('updatePersonalInfo dao input data', data);
         try {
-            const updatedPersonalInfo = await PgDatabase.query(`UPDATE personal_info SET fullName=$1,status=$2 where _id=$3`, [data.fullName, data.status, id])
+            const updatedPersonalInfo = await PgDatabase.query(`UPDATE personal_info SET \"fullName\"=$1,status=$2 where _id=$3`, [data.fullName, data.status, id])
                 .then(async () => {
                     Log.info('Success updated query personalinfo');
                     const info = await this.getPersonalInfoByUserId(id);

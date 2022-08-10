@@ -8,7 +8,7 @@ export class UserRelationDao {
         Log.info('createUserRelation dao: data', data);
         try {
             const id = uuid();
-            await PgDatabase.query("INSERT INTO users_relation (_id, userId, followerId, type) VALUES ($1,$2,$3,$4)", [
+            await PgDatabase.query("INSERT INTO users_relation (_id, \"userId\", \"followerId\", type) VALUES ($1,$2,$3,$4)", [
                 id,
                 data.userId,
                 data.followerId,
@@ -47,7 +47,7 @@ export class UserRelationDao {
     public async getUserRelationByIds(data: UserRelationIds): Promise<any> {
         Log.info('getUserRelationByIds dao input data', data);
         try {
-            const userRelation = await PgDatabase.query(`SELECT * FROM users_relation where userId=$1, followerId=$2`, [data.userId, data.followerId])
+            const userRelation = await PgDatabase.query(`SELECT * FROM users_relation where \"userId\"=$1, \"followerId\"=$2`, [data.userId, data.followerId])
                 .then((result) => {
                     const { rows } = result;
                     Log.info('Success fetch userRelation query', rows);
@@ -76,7 +76,7 @@ export class UserRelationDao {
                 offset = 0;
             }
             const type = RelationType.following;
-            const followersId = await PgDatabase.query(`SELECT * FROM users_relation where followerId=$1 AND type=$2 LIMIT $3 OFFSET $4`, [
+            const followersId = await PgDatabase.query(`SELECT * FROM users_relation where \"followerId\"=$1 AND type=$2 LIMIT $3 OFFSET $4`, [
                 userId,
                 type,
                 limit,
@@ -108,7 +108,7 @@ export class UserRelationDao {
                 offset = 0;
             }
             const type = RelationType.requested;
-            const requestersId = await PgDatabase.query(`SELECT * FROM users_relation where followerId=$1 AND type=$2 LIMIT $3 OFFSET $4`, [
+            const requestersId = await PgDatabase.query(`SELECT * FROM users_relation where \"followerId\"=$1 AND type=$2 LIMIT $3 OFFSET $4`, [
                 userId,
                 type,
                 limit,
@@ -141,7 +141,7 @@ export class UserRelationDao {
                 offset = 0;
             }
             const type = RelationType.following;
-            const followingUsersId = await PgDatabase.query(`SELECT * FROM users_relation where userId=$1 AND type=$2 LIMIT $3 OFFSET $4`, [
+            const followingUsersId = await PgDatabase.query(`SELECT * FROM users_relation where \"userId\"=$1 AND type=$2 LIMIT $3 OFFSET $4`, [
                 userId,
                 type,
                 limit,
@@ -207,7 +207,7 @@ export class UserRelationDao {
     public async deleteAllUserRelationByUserId(userId: string): Promise<any> {
         Log.info('deleteAllUserRelationByUserId dao input userId', userId);
         try {
-            const deletedId = await PgDatabase.query(`DELETE FROM users_relation where userId=$1 OR followerId=$1 RETURNING *`, [userId])
+            const deletedId = await PgDatabase.query(`DELETE FROM users_relation where \"userId\"=$1 OR \"followerId\"=$1 RETURNING *`, [userId])
                 .then((result) => {
                     const { rows } = result;
                     Log.info('Success deleted userRelation query', rows);
