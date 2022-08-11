@@ -41,16 +41,11 @@ export class UserRelationDao {
             return error.message;
         }
     }
-    public async getFollowersIdByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getFollowersIdByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getRelationsByUserId dao input userId', userId);
         Log.info('getRelationsByUserId dao input limit', limit);
         Log.info('getRelationsByUserId dao input offset', offset);
         try {
-            if(limit === undefined){
-                limit = 10;
-            } else if(offset === undefined){
-                offset = 0;
-            }
             const input = {
                 followerId: userId,
                 type: RelationType.following
@@ -63,16 +58,11 @@ export class UserRelationDao {
             return error.message;
         }
     }
-    public async getRequestersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getRequestersByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getRequestersByUserId dao input userId', userId);
         Log.info('getRequestersByUserId dao input limit', limit);
         Log.info('getRequestersByUserId dao input offset', offset);
         try {
-            if(limit === undefined){
-                limit = 10;
-            } else if(offset === undefined){
-                offset = 0;
-            }
             const input = {
                 followerId: userId,
                 type: RelationType.requested
@@ -85,17 +75,11 @@ export class UserRelationDao {
             return error.message;
         }
     }
-
-    public async getFollowingUsersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getFollowingUsersByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getFollowingUsersByUserId dao input userId', userId);
         Log.info('getFollowingUsersByUserId dao input limit', limit);
         Log.info('getFollowingUsersByUserId dao input offset', offset);
         try {
-            if(limit === undefined){
-                limit = 10;
-            } else if(offset === undefined){
-                offset = 0;
-            }
             const input = {
                 userId,
                 type: RelationType.following
@@ -105,6 +89,21 @@ export class UserRelationDao {
             return followingUsers.map(followingUser => followingUser.followerId);
         } catch (error) {
             Log.error('Error in getFollowingUsersByUserId dao', error);
+            return error.message;
+        }
+    }
+    public async getFollowingUserIdsByUserId(userId: string): Promise<any> {
+        Log.info('getFollowingUserIdsByUserId dao input userId', userId);
+        try {
+            const input = {
+                userId,
+                type: RelationType.following
+            }
+            const followingUsers = await UserRelationModel.find(input).exec();
+            Log.info('return of getFollowingUserIdsByUserId dao', followingUsers);
+            return followingUsers.map(followingUser => followingUser.followerId);
+        } catch (error) {
+            Log.error('Error in getFollowingUserIdsByUserId dao', error);
             return error.message;
         }
     }

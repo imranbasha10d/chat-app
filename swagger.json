@@ -954,11 +954,14 @@
                         "type": "string"
                     },
                     {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/Paginate"
-                        }
+                        "in": "query",
+                        "name": "limit",
+                        "type": "integer"
+                    },
+                    {
+                        "in": "path",
+                        "name": "offset",
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1013,11 +1016,14 @@
                         "type": "string"
                     },
                     {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/Paginate"
-                        }
+                        "in": "query",
+                        "name": "limit",
+                        "type": "integer"
+                    },
+                    {
+                        "in": "path",
+                        "name": "offset",
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1072,11 +1078,14 @@
                         "type": "string"
                     },
                     {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/Paginate"
-                        }
+                        "in": "query",
+                        "name": "limit",
+                        "type": "integer"
+                    },
+                    {
+                        "in": "path",
+                        "name": "offset",
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1472,19 +1481,6 @@
                         "In Relationship",
                         "Not Interested"
                     ]
-                }
-            }
-        },
-        "Paginate": {
-            "type": "object",
-            "properties": {
-                "limit": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "offset": {
-                    "type": "integer",
-                    "format": "int64"
                 }
             }
         },

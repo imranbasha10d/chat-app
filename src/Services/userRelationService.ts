@@ -65,7 +65,7 @@ export default class UserRelationService {
         }
     }
 
-    public async getFollowersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getFollowersByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getFollowersByUserId service input userId', userId);
         Log.info('getFollowersByUserId service input limit', limit);
         Log.info('getFollowersByUserId service input offset', offset);
@@ -91,7 +91,7 @@ export default class UserRelationService {
         }
     }
 
-    public async getFollowingUsersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getFollowingUsersByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getFollowingUsersByUserId service input userId', userId);
         Log.info('getFollowingUsersByUserId service input limit', limit);
         Log.info('getFollowingUsersByUserId service input offset', offset);
@@ -117,7 +117,7 @@ export default class UserRelationService {
         }
     }
 
-    public async getRequestersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getRequestersByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getRequestersByUserId service input userId', userId);
         Log.info('getRequestersByUserId service input limit', limit);
         Log.info('getRequestersByUserId service input offset', offset);

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UserRelationService } from '../Services';
+import { getLimitAndOffsetFromQuery } from '../Utils/pgMethods';
 import { UserRelationIds } from '../Utils/types'
 
 const userRelationService = new UserRelationService();
@@ -17,19 +18,19 @@ export default class UserRelationController {
     }
     public async getFollowersByUserId(req: Request, res: Response): Promise<void> {
         const userId = req.params.id;
-        const { limit, offset } = req.body;
+        const { limit, offset } = getLimitAndOffsetFromQuery(req.query);
         let result = await userRelationService.getFollowersByUserId(userId, limit, offset);
         res.status(result.statusCode).json(result);
     }
     public async getFollowingUsersByUserId(req: Request, res: Response): Promise<void> {
         const userId = req.params.id;
-        const { limit, offset } = req.body;
+        const { limit, offset } = getLimitAndOffsetFromQuery(req.query);
         let result = await userRelationService.getFollowingUsersByUserId(userId, limit, offset);
         res.status(result.statusCode).json(result);
     }
     public async getRequestersByUserId(req: Request, res: Response): Promise<void> {
         const userId = req.params.id;
-        const { limit, offset } = req.body;
+        const { limit, offset } = getLimitAndOffsetFromQuery(req.query);
         let result = await userRelationService.getRequestersByUserId(userId, limit, offset);
         res.status(result.statusCode).json(result);
     }

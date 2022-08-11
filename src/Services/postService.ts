@@ -78,7 +78,7 @@ export default class PostService {
                 Log.info('return from getUserFeedsByUserId service', user);
                 return Response.notFound(RESPONSE_MEESAGE['USER_NOT_FOUND']);
             }
-            const followingUserIds = await this.userRelationDao.getFollowingUsersByUserId(userId);
+            const followingUserIds = await this.userRelationDao.getFollowingUserIdsByUserId(userId);
             Log.info('return value from getFollowingUsersByUserId method', followingUserIds);
             const feeds = await this.postDao.getAllPostsByOwnerIds(followingUserIds, limit, offset);
             Log.info('return from getUserFeedsByUserId', feeds);

@@ -65,16 +65,11 @@ export class UserRelationDao {
             return error.message;
         }
     }
-    public async getFollowersIdByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getFollowersIdByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getFollowersIdByUserId dao input userId', userId);
         Log.info('getFollowersIdByUserId dao input limit', limit);
         Log.info('getFollowersIdByUserId dao input offset', offset);
         try {
-            if (limit === undefined) {
-                limit = 10;
-            } else if (offset === undefined) {
-                offset = 0;
-            }
             const type = RelationType.following;
             const followersId = await PgDatabase.query(`SELECT * FROM users_relation where \"followerId\"=$1 AND type=$2 LIMIT $3 OFFSET $4`, [
                 userId,
@@ -97,16 +92,11 @@ export class UserRelationDao {
             return error.message;
         }
     }
-    public async getRequestersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getRequestersByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getRequestersByUserId dao input userId', userId);
         Log.info('getRequestersByUserId dao input limit', limit);
         Log.info('getRequestersByUserId dao input offset', offset);
         try {
-            if (limit === undefined) {
-                limit = 10;
-            } else if (offset === undefined) {
-                offset = 0;
-            }
             const type = RelationType.requested;
             const requestersId = await PgDatabase.query(`SELECT * FROM users_relation where \"followerId\"=$1 AND type=$2 LIMIT $3 OFFSET $4`, [
                 userId,
@@ -129,23 +119,40 @@ export class UserRelationDao {
             return error.message;
         }
     }
-
-    public async getFollowingUsersByUserId(userId: string, limit?: number, offset?: number): Promise<any> {
+    public async getFollowingUsersByUserId(userId: string, limit: number, offset: number): Promise<any> {
         Log.info('getFollowingUsersByUserId dao input userId', userId);
         Log.info('getFollowingUsersByUserId dao input limit', limit);
         Log.info('getFollowingUsersByUserId dao input offset', offset);
         try {
-            if (limit === undefined) {
-                limit = 10;
-            } else if (offset === undefined) {
-                offset = 0;
-            }
             const type = RelationType.following;
             const followingUsersId = await PgDatabase.query(`SELECT * FROM users_relation where \"userId\"=$1 AND type=$2 LIMIT $3 OFFSET $4`, [
                 userId,
                 type,
                 limit,
                 offset
+            ]).then((result) => {
+                const { rows } = result;
+                Log.info('Success fetch userRelation query', rows);
+                if (rows.length > 0) return rows.map(userRelation => userRelation.followerId);
+                return [];
+            }).catch((error) => {
+                Log.error('Error in fetch userRelation query', error);
+                return null;
+            });
+            Log.info('return of getFollowingUsersByUserId dao', followingUsersId);
+            return followingUsersId;
+        } catch (error) {
+            Log.error('Error in getFollowingUsersByUserId dao', error);
+            return error.message;
+        }
+    }
+    public async getFollowingUserIdsByUserId(userId: string): Promise<any> {
+        Log.info('getFollowingUsersByUserId dao input userId', userId);
+        try {
+            const type = RelationType.following;
+            const followingUsersId = await PgDatabase.query(`SELECT * FROM users_relation where \"userId\"=$1 AND type=$2`, [
+                userId,
+                type
             ]).then((result) => {
                 const { rows } = result;
                 Log.info('Success fetch userRelation query', rows);
